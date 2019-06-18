@@ -1,4 +1,4 @@
-package com.example.donotforget;
+package com.example.donotforget.fragment;
 
 
 import android.os.AsyncTask;
@@ -7,6 +7,8 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.donotforget.R;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,25 +31,27 @@ public class SplashFragment extends Fragment {
 
         SplashTask splashTask = new SplashTask();
         splashTask.execute();
+
         return inflater.inflate(R.layout.fragment_splash, container, false);
     }
 
     class SplashTask extends AsyncTask<Void, Void, Void> {
 
         @Override
-        protected Void doInBackground(Void... params) {
-            //реализум задержку экрана
+        protected Void doInBackground(Void... voids) {
+
+            //выставляем время, которое будет показываться сплешскрин.
             try {
-                TimeUnit.SECONDS.sleep(5);
+                TimeUnit.SECONDS.sleep(6);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
 
-            //проверка нан наличие активити перед кодом удоляющим обьекты из стека
-            if (getActivity()!=null) {
+            if (getActivity() != null) {
                 getActivity().getFragmentManager().popBackStack();
             }
             return null;
         }
     }
+
 }
