@@ -15,9 +15,9 @@ import com.example.donotforget.adapter.TabAdapter;
 import com.example.donotforget.fragment.SplashFragment;
 
 public class MainActivity extends AppCompatActivity {
-
+//создаем переменную fragmentManager менеджер для работы с фрагментами
     FragmentManager fragmentManager;
-
+//создаем переменную PreferenceHelper которая содержит настройки проэкта
     PreferenceHelper preferenceHelper;
 
     @Override
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity {
         //Инициализируем преференс хелпер
         PreferenceHelper.getInstance().init(getApplicationContext());
         //обьявляем обьект и получаем экземпляр с помощью метода getInstance
+        //используем патерн синглТон
         preferenceHelper = PreferenceHelper.getInstance();
 
         fragmentManager = getFragmentManager();
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             //метод addToBackStack добавляет транзакцию в стек Task-а.
             fragmentManager.beginTransaction()
                     .replace(R.id.content_frame, splashFragment)
-                    .addToBackStack(null)
+                    .addToBackStack(null)//последовательность экранов
                     .commit();
         }
     }
