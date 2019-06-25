@@ -14,42 +14,52 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="16dp"
-            android:layout_marginRight="16dp" >
+            android:layout_marginRight="16dp">
 
-        <EditText
-            android:layout_width="match_parent"
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilDialogTaskDate"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
-    </android.support.design.widget.TextInputLayout>
+            android:layout_below="@+id/tilDialogTaskTitle"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilDialogTaskDate"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tilDialogTaskTitle"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="16dp"
-        android:layout_marginLeft="16dp">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:cursorVisible="false"
+                android:focusableInTouchMode="false"
+                android:inputType="none"
+                android:textSize="16sp" />
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:inputType="none"
-        android:focusableInTouchMode="false"
-        android:cursorVisible="false"/>
-</android.support.design.widget.TextInputLayout>
+        </android.support.design.widget.TextInputLayout>
 
-    <android.support.design.widget.TextInputLayout
-        android:id="@+id/tilDialogTaskTime"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-<EditText
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:textSize="16sp" />
-    </android.support.design.widget.TextInputLayout>
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/tilDialogTaskTime"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tilDialogTaskTitle"
+            android:layout_alignRight="@+id/tilDialogTaskTitle"
+            android:layout_marginTop="16dp"
+            >
 
-</RelativeLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:inputType="none"
+                android:focusableInTouchMode="false"
+                android:cursorVisible="false"/>
 
-    </ScrollView>
+        </android.support.design.widget.TextInputLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

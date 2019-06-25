@@ -17,7 +17,8 @@ public class TabAdapter extends FragmentStatePagerAdapter {
 
    /* private CurrentTaskFragment currentTaskFragment;
     private DoneTaskFragment doneTaskFragment;*/
-
+//посредник между данными и их представленимями
+    // в основном используется с списками или массивами
     public TabAdapter(FragmentManager fm, int numberOfTabs) {
         super(fm);
         this.numberOfTabs = numberOfTabs;

@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     @Override
+    //метод с
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
