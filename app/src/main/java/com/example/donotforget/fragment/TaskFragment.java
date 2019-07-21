@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 
 import com.example.donotforget.adapter.CurrentTasksAdapter;
+import com.example.donotforget.adapter.TaskAdapter;
 import com.example.donotforget.model.Item;
 import com.example.donotforget.model.ModelTask;
 
@@ -16,7 +17,7 @@ public abstract class TaskFragment extends Fragment {
     protected RecyclerView recyclerView;
     protected RecyclerView.LayoutManager layoutManager;
 
-    protected CurrentTasksAdapter adapter;
+    protected TaskAdapter adapter;
 
     public void addTask(ModelTask newTask) {
         int position = -1;
@@ -40,4 +41,6 @@ public abstract class TaskFragment extends Fragment {
         }
     }
 
+        //пишем абстрактный метод для переноса Task
+        public abstract void  moveTask(ModelTask task);
 }

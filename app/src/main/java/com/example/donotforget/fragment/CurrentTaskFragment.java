@@ -42,6 +42,12 @@ public class CurrentTaskFragment extends TaskFragment {
         return rootView;
     }
 
+    //имплементируем метод moveTask
+    @Override
+    public void moveTask(ModelTask task) {
 
+    }
 
+    public interface OnTaskDoneListener {
+    }
 }

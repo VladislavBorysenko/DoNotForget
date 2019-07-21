@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 
+<!--чтобы тулбар не отображался поерх сплешскрина, добавим корневой элемент FrameLayout-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,26 +10,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!--CoordinatorLayout позволя задавать отступы-->
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/coordinator"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <!--создаем контейнер для вкладок-->
+        <!--
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            android:layout_gravity="center_vertical"
+            android:textSize="35sp"/>
+            -->
+
+
+        <!--создаём контейнер для вкладок-->
         <android.support.v4.view.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            />
         <!--layout_marginTop чтобы предотвратить наложение тулбара на вьюпейджер-->
+        <!--app:layout_behavior добавляет возможность скрывать тулбар и таб-лэйаут при прокрутке-->
+
 
         <!--подключаем AppBarLayout для добавления вкладок (tabs)-->
         <android.support.design.widget.AppBarLayout
             android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
 
             <!--добавляем Toolbar вместо устаревшего action bar-->
@@ -46,7 +59,11 @@
                 app:tabSelectedTextColor="@android:color/background_light"
                 app:tabTextColor="@android:color/background_light"
                 app:layout_scrollFlags="scroll|enterAlways"/>
-
+            <!--selected tab-->
+            <!--not selected tab-->
+            <!--tabIndicatorColor  полоска под выбранной вкладкой-->
+            <!--tabSelectedTextColor  цвет текста активной вкладки-->
+            <!--tabTextColor  цвет текста НЕактивной вкладки-->
 
         </android.support.design.widget.AppBarLayout>
 
@@ -55,10 +72,17 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/fab_margin"
-            android:src="@drawable/baseline_add_white_24"
+            android:src="@drawable/baseline_add_white_36"
             app:layout_anchor="@id/pager"
             app:layout_anchorGravity="bottom|right|end" />
-        <!-- android:layout_margin="@dimen/fab_margin"-разный отступ для разных разрешений-->
+
+        <!--указание местоположения FloatingActionButton
+        app:layout_anchor="@id/pager"
+        app:layout_anchorGravity="bottom|right|end"-->
+
+        <!--отступ fab от краёв экрана
+        android:layout_margin="@dimen/fab_margin"-->
+
 
     </android.support.design.widget.CoordinatorLayout>
 </FrameLayout>

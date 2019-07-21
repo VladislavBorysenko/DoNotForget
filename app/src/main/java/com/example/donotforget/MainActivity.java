@@ -20,10 +20,13 @@ import com.example.donotforget.dialog.AddingTaskDialogFragment;
 import com.example.donotforget.fragment.CurrentTaskFragment;
 import com.example.donotforget.fragment.DoneTaskFragment;
 import com.example.donotforget.fragment.SplashFragment;
+import com.example.donotforget.fragment.TaskFragment;
 import com.example.donotforget.model.ModelTask;
 
 
-public class MainActivity extends AppCompatActivity implements AddingTaskDialogFragment.AddingTaskListener {
+public class MainActivity extends AppCompatActivity
+        implements AddingTaskDialogFragment.AddingTaskListener,
+        CurrentTaskFragment.OnTaskDoneListener, DoneTaskFragment.OnTaskRestoreListener{
 
     FragmentManager fragmentManager;
 
@@ -31,8 +34,8 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
 
     TabAdapter tabAdapter;
 
-    CurrentTaskFragment currentTaskFragment;
-    DoneTaskFragment doneTaskFragment;
+    TaskFragment currentTaskFragment;
+    TaskFragment doneTaskFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -166,5 +169,15 @@ public class MainActivity extends AppCompatActivity implements AddingTaskDialogF
     @Override
     public void onTaskAddingCancel() {
         Toast.makeText(this, "Task adding canceled", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onTaskRestore(ModelTask task) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

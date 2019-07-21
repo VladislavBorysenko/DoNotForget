@@ -11,9 +11,12 @@ import com.example.donotforget.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    List<Item> items;
+import de.hdodenhof.circleimageview.CircleImageView;
 
+public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    //базовый абстрактный класс для CurrentTaskAdapter и DoneTaskAdapter
+
+    List<Item> items;
     TaskFragment taskFragment;
 
     public TaskAdapter(TaskFragment taskFragment) {
@@ -21,6 +24,7 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
         items = new ArrayList<>();
     }
 
+    //получить элемент списка по позиции
     public Item getItem(int position) {
         return items.get(position);
     }
@@ -38,30 +42,30 @@ public abstract class TaskAdapter extends RecyclerView.Adapter<RecyclerView.View
         notifyItemInserted(location);
     }
 
-    //пропишем условие, для безопасного удоления из списка
-    public void removItem(int location) {
+    public void removeItem(int location) {
         if (location >= 0 && location <= getItemCount() - 1) {
             items.remove(location);
             notifyItemRemoved(location);
         }
     }
 
-
-    //переопределяем метод который будет возвращать размер массива элементов списка
     @Override
     public int getItemCount() {
         return items.size();
     }
 
+    //protected - чтобы иметь доступ из классов-наследников
     protected class TaskViewHolder extends RecyclerView.ViewHolder {
 
         protected TextView title;
         protected TextView date;
+        protected CircleImageView priority;
 
-        public TaskViewHolder(@NonNull View itemView, TextView title, TextView date) {
+        public TaskViewHolder(@NonNull View itemView, TextView title, TextView date,CircleImageView priority) {
             super(itemView);
             this.title = title;
             this.date = date;
+            this.priority = priority;
         }
     }
 
