@@ -76,18 +76,20 @@ public class DoneTaskAdapter extends TaskAdapter {
 
             taskViewHolder.priority.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
                     task.setStatus(ModelTask.STATUS_CURRENT);
+
+                    getTaskFragment().activity.dbHelper.update().status(task.getTimeStamp(),ModelTask.STATUS_CURRENT);
 
                     itemView.setBackgroundColor(resources.getColor(R.color.gray_50));
 
                     taskViewHolder.title.setTextColor(resources.getColor(R.color.primary_text_default_material_light));
                     taskViewHolder.date.setTextColor(resources.getColor(R.color.secondary_text_default_material_light));
                     taskViewHolder.priority.setColorFilter(resources.getColor(task.getPriorityColor()));
-
                     //поворот в обратную сторону (+180f)
                     ObjectAnimator flipIn = ObjectAnimator.ofFloat(taskViewHolder.priority, "rotationY", 180f, 0f);
                     taskViewHolder.priority.setImageResource(R.drawable.ic_checkbox_blank_circle_outline_white_48dp);
+
                     flipIn.addListener(new Animator.AnimatorListener() {
                         @Override
                         public void onAnimationStart(Animator animator) {

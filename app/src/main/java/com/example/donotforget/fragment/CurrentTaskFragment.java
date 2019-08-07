@@ -11,7 +11,11 @@ import android.view.ViewGroup;
 
 import com.example.donotforget.R;
 import com.example.donotforget.adapter.CurrentTasksAdapter;
+import com.example.donotforget.database.DBHelper;
 import com.example.donotforget.model.ModelTask;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,12 +46,40 @@ public class CurrentTaskFragment extends TaskFragment {
         return rootView;
     }
 
-    //имплементируем метод moveTask
+    @Override
+    public void addTask(ModelTask newTask, boolean saveToDB) {
+        super.addTask(newTask, saveToDB);
+    }
+
+    @Override
+    public void addTaskFromDB() {
+        List<ModelTask> tasks = new ArrayList<>();
+        tasks.addAll(activity.dbHelper.query().getTasks(DBHelper.SELECTION_STATUS
+                + " OR " + DBHelper.SELECTION_STATUS, new String[]{Integer.toString(ModelTask.STATUS_CURRENT),
+                Integer.toString(ModelTask.STATUS_OVERDUE)}, DBHelper.TASK_DATE_COLUMN));
+
+        for(
+    int i = 0; i<tasks.size();i++)
+
+    {
+        addTask(tasks.get(i), false);
+
+    }
+
+}
+
     @Override
     public void moveTask(ModelTask task) {
 
     }
 
-    public interface OnTaskDoneListener {
+    //имплементируем метод moveTask
+ /*   @Override
+   public void moveTask(ModelTask task) {
+        onTaskDoneListener.onTaskDone(task);
+    }*/
+
+  public interface OnTaskDoneListener {
+        void onTaskDone(ModelTask task);
     }
 }

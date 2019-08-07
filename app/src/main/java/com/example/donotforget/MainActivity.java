@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 
 import com.example.donotforget.adapter.TabAdapter;
+import com.example.donotforget.database.DBHelper;
 import com.example.donotforget.dialog.AddingTaskDialogFragment;
 import com.example.donotforget.fragment.CurrentTaskFragment;
 import com.example.donotforget.fragment.DoneTaskFragment;
@@ -26,7 +27,7 @@ import com.example.donotforget.model.ModelTask;
 
 public class MainActivity extends AppCompatActivity
         implements AddingTaskDialogFragment.AddingTaskListener,
-        CurrentTaskFragment.OnTaskDoneListener, DoneTaskFragment.OnTaskRestoreListener{
+        CurrentTaskFragment.OnTaskDoneListener, DoneTaskFragment.OnTaskRestoreListener {
 
     FragmentManager fragmentManager;
 
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity
     TaskFragment currentTaskFragment;
     TaskFragment doneTaskFragment;
 
+    public DBHelper dbHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +47,8 @@ public class MainActivity extends AppCompatActivity
 
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
+
+        dbHelper = new DBHelper(getApplicationContext());
 
         fragmentManager = getFragmentManager();
 
@@ -154,16 +159,15 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 //создаём объект типа AddingTaskDialogFragment и вызываем его.
                 DialogFragment addingTaskDialogFragment = new AddingTaskDialogFragment();
-                addingTaskDialogFragment.show(fragmentManager, "addingTaskDialogFragment");
+                addingTaskDialogFragment.show(fragmentManager, "AddingTaskDialogFragment");
             }
         });
     }
 
     @Override
     public void onTaskAdded(ModelTask newTask) {
+        currentTaskFragment.addTask(newTask, true);
         Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
-        currentTaskFragment.addTask(newTask);
-
     }
 
     @Override
@@ -172,12 +176,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onTaskRestore(ModelTask task) {
+    public void onTaskDone(ModelTask task) {
+        doneTaskFragment.addTask(task,false);
+    }
 
+    @Override
+    public void onTaskRestore(ModelTask task) {
+currentTaskFragment.addTask(task,false);
     }
 
     @Override
     public void onPointerCaptureChanged(boolean hasCapture) {
 
     }
+
+
 }
