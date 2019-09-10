@@ -26,10 +26,12 @@ public class DBHelper extends SQLiteOpenHelper {
             + TASKS_TABLE + " (" + BaseColumns._ID
             + " INTEGER PRIMARY KEY AUTOINCREMENT, " + TASK_TITLE_COLUMN + " TEXT NOT NULL, "
             + TASK_DATE_COLUMN + " LONG, " + TASK_PRIORITY_COLUMN + " INTEGER, "
-            + TASK_STATUS_COLUMN + " INTEGER" + TASK_TIME_STAMP_COLUMN + " LONG);";
+            + TASK_STATUS_COLUMN + " INTEGER," + TASK_TIME_STAMP_COLUMN + " LONG);";
 
 
     public static final String SELECTION_STATUS = DBHelper.TASK_STATUS_COLUMN + " = ? ";
+    public static final String SELECTION_TIME_STAMP = TASK_TIME_STAMP_COLUMN + " = ? ";
+    public static final String SELECTION_LIKE_TITLE = TASK_TITLE_COLUMN +"LIKE ?";
 
     private DBQueryManager queryManager;
     private DBUpdateManager updateManager;
@@ -76,6 +78,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     public DBUpdateManager update() {
         return updateManager;
+    }
+
+    //Метод отпровляет запрос в базу данных на удоления тасков
+    public void removeTask(long timeStamp) {
+        getWritableDatabase().delete(TASKS_TABLE, SELECTION_TIME_STAMP, new String[]{Long.toString(timeStamp)});
     }
 
 }

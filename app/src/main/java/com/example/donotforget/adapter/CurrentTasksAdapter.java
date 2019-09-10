@@ -5,6 +5,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.res.Resources;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -73,8 +74,8 @@ public class CurrentTasksAdapter extends TaskAdapter {
             }
 
             itemView.setVisibility(View.VISIBLE);
+            taskViewHolder.priority.setEnabled(true);
 
-            itemView.setBackgroundColor(resources.getColor(R.color.gray_50));
 
             //устанавливаем цвета для текстовых полей TextView и CircleImageView
             taskViewHolder.title.setTextColor(resources.getColor(R.color.primary_text_default_material_light));
@@ -82,14 +83,29 @@ public class CurrentTasksAdapter extends TaskAdapter {
             taskViewHolder.priority.setColorFilter(resources.getColor(task.getPriorityColor()));
             taskViewHolder.priority.setImageResource(R.drawable.ic_circle_white_36dp);
 
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Handler handler = new Handler();
+                    //реализуем задержку методомо  postDelay
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            getTaskFragment().removeTaskDialog(taskViewHolder.getLayoutPosition());
+                        }
+                    }, 1000);
+
+                    return true;
+                }
+            });
+
             //по нажатию на элемент(таск) он обозначается, как выполненый
             taskViewHolder.priority.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
+                    taskViewHolder.priority.setEnabled(false);
                     task.setStatus(ModelTask.STATUS_DONE);
                     getTaskFragment().activity.dbHelper.update().status(task.getTimeStamp(), ModelTask.STATUS_DONE);
-
-                    itemView.setBackgroundColor(resources.getColor(R.color.gray_200));
 
                     taskViewHolder.title.setTextColor(resources.getColor(R.color.primary_text_disabled_material_light));
                     taskViewHolder.date.setTextColor(resources.getColor(R.color.secondary_text_disabled_material_light));

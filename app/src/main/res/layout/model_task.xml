@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:clickable="true"
-    android:background="?android:attr/selectableItemBackground">
+    android:layout_height="56dp"
+    android:background="@color/gray_50">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:background="?android:attr/selectableItemBackground">
 
     <TextView
         android:layout_width="match_parent"
@@ -37,7 +41,7 @@
     android:layout_height="40dp"
     android:src="@color/design_default_color_primary_dark"
     android:layout_marginLeft="16dp"
-    android:layout_marginTop="8dp"
-    />
+    android:layout_marginTop="8dp" />
+    </RelativeLayout>
 
 </RelativeLayout>
