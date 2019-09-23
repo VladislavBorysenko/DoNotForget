@@ -60,6 +60,17 @@ public class MainActivity extends AppCompatActivity
         setUI();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MyApplication.activityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MyApplication.activityPaused();
+    }
 
     public void runSplash() {
         //код запуска сплэшскрина.

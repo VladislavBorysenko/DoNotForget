@@ -94,7 +94,7 @@ public class DoneTaskAdapter extends TaskAdapter {
             taskViewHolder.priority.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    taskViewHolder.priority.setEnabled(false);
+                    taskViewHolder.priority.setEnabled(false);//позваляет блокировать многократное нажатие
                     task.setStatus(ModelTask.STATUS_CURRENT);
 
                     getTaskFragment().activity.dbHelper.update().status(task.getTimeStamp(), ModelTask.STATUS_CURRENT);
