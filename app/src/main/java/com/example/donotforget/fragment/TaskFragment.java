@@ -13,6 +13,7 @@ import android.view.View;
 import com.example.donotforget.MainActivity;
 import com.example.donotforget.R;
 import com.example.donotforget.adapter.TaskAdapter;
+import com.example.donotforget.alarm.AlarmHelper;
 import com.example.donotforget.model.Item;
 import com.example.donotforget.model.ModelTask;
 
@@ -92,7 +93,7 @@ public abstract class TaskFragment extends Fragment {
                     isRemoved[0] = true;
                     Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.coordinator), R.string.removed, Snackbar.LENGTH_LONG);
                     snackbar.setAction(R.string.dialog_cancel, new View.OnClickListener() {
-                        //по нажатию на отмену в снекбаре, таск восстанавливается в БД
+                        //по нажатию на отмену в  некбаре, таск восстанавливается в БД
                         @Override
                         public void onClick(View view) {
                             addTask(activity.dbHelper.query().getTask(timeStamp), false);

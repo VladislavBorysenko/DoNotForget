@@ -1,4 +1,4 @@
-package com.example.donotforget;
+package com.example.donotforget.alarm;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -7,6 +7,10 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
+
+import com.example.donotforget.MainActivity;
+import com.example.donotforget.MyApplication;
+import com.example.donotforget.R;
 
 //Данный класс позволяет принимать сообщения из других андроид предложений
 public class AlarmReceiver extends BroadcastReceiver {
@@ -47,7 +51,8 @@ public class AlarmReceiver extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify((int) timeStamp, notification);
-            //8.23 (9 urok)
+
+
 
     }
 }

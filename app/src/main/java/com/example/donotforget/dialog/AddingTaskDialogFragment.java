@@ -22,6 +22,7 @@ import android.widget.TimePicker;
 
 import com.example.donotforget.R;
 import com.example.donotforget.Utils;
+import com.example.donotforget.alarm.AlarmHelper;
 import com.example.donotforget.model.ModelTask;
 
 import java.util.Calendar;
@@ -177,8 +178,13 @@ public class AddingTaskDialogFragment extends DialogFragment {
             public void onClick(DialogInterface dialogInterface, int which) {
                 //присваиваем заголовку таска значение из поля ввода.
                 task.setTitle(etTitle.getText().toString());
+                task.setStatus(ModelTask.STATUS_CURRENT);
                 if (etDate.length() != 0 || etTime.length() != 0) {
                     task.setDate(calendar.getTimeInMillis());
+
+                    //Создаем обьект АлармХелпер
+                    AlarmHelper alarmHelper = AlarmHelper.getInstance();
+                    alarmHelper.setAlarm(task);
                 }
 
                 task.setStatus(ModelTask.STATUS_CURRENT);

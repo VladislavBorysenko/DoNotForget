@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 
 import com.example.donotforget.adapter.TabAdapter;
+import com.example.donotforget.alarm.AlarmHelper;
 import com.example.donotforget.database.DBHelper;
 import com.example.donotforget.dialog.AddingTaskDialogFragment;
 import com.example.donotforget.fragment.CurrentTaskFragment;
@@ -50,6 +51,8 @@ public class MainActivity extends AppCompatActivity
 
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
+
+        AlarmHelper.getInstance().init(getApplicationContext());
 
         dbHelper = new DBHelper(getApplicationContext());
 
