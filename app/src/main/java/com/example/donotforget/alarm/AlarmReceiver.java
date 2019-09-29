@@ -21,10 +21,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         //при вызове ресивера мы будем передовать ему параметры
         //имя задачи
         String title = intent.getStringExtra("title");
+
         //время создания задачи
         long timeStamp = intent.getLongExtra("time_Stamp", 0);
+
         //цвет который будет определять приоритет задачи
         int color = (int) intent.getLongExtra("color", 0);
+
         //Запускает наше главное активити при нажатии на нотификацию
         Intent resultIntent = new Intent(context, MainActivity.class);
 
@@ -46,12 +49,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         builder.setContentIntent(pendingIntent);
 
         Notification notification = builder.build();
-        notification.flags |=Notification.FLAG_AUTO_CANCEL;
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         NotificationManager notificationManager = (NotificationManager) context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-            notificationManager.notify((int) timeStamp, notification);
-
+        notificationManager.notify((int) timeStamp, notification);
 
 
     }

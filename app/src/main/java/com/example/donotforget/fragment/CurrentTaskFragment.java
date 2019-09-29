@@ -13,9 +13,11 @@ import android.view.ViewGroup;
 import com.example.donotforget.R;
 import com.example.donotforget.adapter.CurrentTasksAdapter;
 import com.example.donotforget.database.DBHelper;
+import com.example.donotforget.model.ModelSeparator;
 import com.example.donotforget.model.ModelTask;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -96,6 +98,59 @@ public class CurrentTaskFragment extends TaskFragment {
                 }, DBHelper.TASK_DATE_COLUMN));
         for (int i = 0; i < tasks.size(); i++) {
             addTask(tasks.get(i), false);
+        }
+    }
+
+    @Override
+    public void addTask(ModelTask newTask, boolean saveToDB) {
+
+        int position = -1;
+        ModelSeparator separator = null;
+
+
+
+        if (newTask.getDate() != 0) {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(newTask.getDate());
+
+            if (calendar.get(calendar.DAY_OF_MONTH) < Calendar.getInstance().get(Calendar.DAY_OF_MONTH)) {
+                newTask.setDateStatus(ModelSeparator.TYPE_OVERDUE);
+                if (!adapter.containsSeparatorOverdue) {
+                    adapter.containsSeparatorOverdue = true;
+                    separator = new ModelSeparator(ModelSeparator.TYPE_OVERDUE);
+                }
+            } else if (calendar.get(calendar.DAY_OF_YEAR) == Calendar.getInstance().get(Calendar.DAY_OF_YEAR)){
+                newTask.setDateStatus(ModelSeparator.TYPE_TODAY);
+                if (!adapter.containsSeparatorToday){
+                    adapter.containsSeparatorToday = true;
+                    separator = new ModelSeparator(ModelSeparator.TYPE_TODAY);
+                }
+            } else if (calendar.get(Calendar.DAY_OF_YEAR)== Calendar.getInstance().get(Calendar.DAY_OF_YEAR)+1){
+                newTask.setDateStatus(ModelSeparator.TYPE_TOMORROW);
+                if (!adapter.containsSeparatorTomorrow){
+                    adapter.containsSeparatorTomorrow = true;
+                    separator = new ModelSeparator(ModelSeparator.TYPE_TOMORROW);
+                }
+            }else if (calendar.get(Calendar.DAY_OF_YEAR)> Calendar.getInstance().get(Calendar.DAY_OF_YEAR)+1){
+                newTask.setDateStatus(ModelSeparator.TYPE_FUTURE);
+                if (!adapter.containsSeparatorFuture){
+                    adapter.containsSeparatorFuture = true:
+                    separator = new ModelSeparator(ModelSeparator.TYPE_FUTURE);
+                }
+            }
+        }
+
+
+
+        if (position != -1) {
+            adapter.addItem(position, newTask);
+        } else {
+            adapter.addItem(newTask);
+        }
+
+        //для новых тасков (saveToDB==true) будем выполнять сохраниние в БД
+        if (saveToDB) {
+            activity.dbHelper.saveTask(newTask);
         }
     }
 

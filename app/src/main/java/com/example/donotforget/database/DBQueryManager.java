@@ -37,8 +37,8 @@ public class DBQueryManager {
         List<ModelTask> tasks = new ArrayList<>();
 
         //будем находить значения в базе данных и формировать их  в Таски
+       // Cursor c = database.query(DBHelper.TASKS_TABLE, null, selection, selectionArgs, null, null, orderBy);
         Cursor c = database.query(DBHelper.TASKS_TABLE, null, selection, selectionArgs, null, null, orderBy);
-
         if (c.moveToFirst()) {
             do {
                 String title = c.getString(c.getColumnIndex(DBHelper.TASK_TITLE_COLUMN));

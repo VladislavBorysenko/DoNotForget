@@ -12,7 +12,7 @@ import com.example.donotforget.model.ModelTask;
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "DoNotForget_database";
+    public static final String DATABASE_NAME = "reminder_database";
     public static final String TASKS_TABLE = "tasks_table";
 
     public static final String TASK_TITLE_COLUMN = "tasks_title";
