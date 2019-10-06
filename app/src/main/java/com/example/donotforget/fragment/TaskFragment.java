@@ -1,6 +1,7 @@
 package com.example.donotforget.fragment;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import com.example.donotforget.MainActivity;
 import com.example.donotforget.R;
 import com.example.donotforget.adapter.TaskAdapter;
 import com.example.donotforget.alarm.AlarmHelper;
+import com.example.donotforget.dialog.EditTaskDialogFragment;
 import com.example.donotforget.model.Item;
 import com.example.donotforget.model.ModelTask;
 
@@ -44,6 +46,12 @@ public abstract class TaskFragment extends Fragment {
     }
 
     public abstract void addTask(ModelTask newTask, boolean saveToDB);
+    //На вкладке выполненных задач не будет сепараторов.
+
+
+    public void updateTask(ModelTask task) {
+        adapter.updateTask(task);
+    }
 
     //вызов диалогового окна для удаления таска
     public void removeTaskDialog(final int location) {
@@ -67,7 +75,7 @@ public abstract class TaskFragment extends Fragment {
                     isRemoved[0] = true;
                     Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.coordinator), R.string.removed, Snackbar.LENGTH_LONG);
                     snackbar.setAction(R.string.dialog_cancel, new View.OnClickListener() {
-                        //по нажатию на отмену в  некбаре, таск восстанавливается в БД
+                        //по нажатию на отмену в снекбаре, таск восстанавливается в БД
                         @Override
                         public void onClick(View view) {
                             addTask(activity.dbHelper.query().getTask(timeStamp), false);
@@ -86,7 +94,7 @@ public abstract class TaskFragment extends Fragment {
                             //метод срабатывает, когда снекбар исчезает с экрана
                             if (isRemoved[0]) {
                                 alarmHelper.removeAlarm(timeStamp);
-                                //если не была нажата кнопка отмены удаления, то таск удаляется окончательно з БД
+                                //если не была нажата кнопка отмены удаления, то таск удаляется окончательно из БД
                                 activity.dbHelper.removeTask(timeStamp);
                             }
                         }
@@ -106,7 +114,20 @@ public abstract class TaskFragment extends Fragment {
         dialogBuilder.show();
     }
 
+    public void showTaskEditDialog(ModelTask task) {
+        DialogFragment editingTaskDialog = EditTaskDialogFragment.newInstance(task);
+        editingTaskDialog.show(getActivity().getFragmentManager(), "EditingTaskDialogFragment");
+    }
+
+    public void removeAllTasks() {
+        adapter.removeAllItems();
+
+    }
+
     public abstract void findTasks(String title);
+
+    //Чтобы не вылетало приложение при возобновлении работы из свёрнутого состояния
+    public abstract void checkAdapter();
 
     public abstract void addTaskFromDB();
 

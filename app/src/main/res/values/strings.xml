@@ -16,6 +16,7 @@
 
     <string name="dialog_removing_message">Are you sure want to delete this task?</string>
     <string name="removed">Removed</string>
+    <string name="dialog_editing_title">Editing task</string>
 
     <string name="task_title">Title</string>
     <string name="task_date">Date</string>
@@ -24,5 +25,13 @@
     <string name="separator_today">Today</string>
     <string name="separator_tomorrow">Tomorrow</string>
     <string name="separator_future">Future</string>
+
+    <string-array name="priority_levels">
+        <item>Low Priority</item>
+        <item>Normal Priority</item>
+        <item>High Priority</item>
+    </string-array>
+
+    <string name="banner_ad_unit_id">ca-app-pub-9126535901166943/2439787314</string>
 
 </resources>

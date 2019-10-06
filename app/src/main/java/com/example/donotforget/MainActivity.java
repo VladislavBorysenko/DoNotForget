@@ -3,6 +3,7 @@ package com.example.donotforget;
 
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+import android.os.PersistableBundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +22,7 @@ import com.example.donotforget.adapter.TabAdapter;
 import com.example.donotforget.alarm.AlarmHelper;
 import com.example.donotforget.database.DBHelper;
 import com.example.donotforget.dialog.AddingTaskDialogFragment;
+import com.example.donotforget.dialog.EditTaskDialogFragment;
 import com.example.donotforget.fragment.CurrentTaskFragment;
 import com.example.donotforget.fragment.DoneTaskFragment;
 import com.example.donotforget.fragment.SplashFragment;
@@ -27,9 +30,12 @@ import com.example.donotforget.fragment.TaskFragment;
 import com.example.donotforget.model.ModelTask;
 
 
+
 public class MainActivity extends AppCompatActivity
         implements AddingTaskDialogFragment.AddingTaskListener,
-        CurrentTaskFragment.OnTaskDoneListener, DoneTaskFragment.OnTaskRestoreListener {
+        CurrentTaskFragment.OnTaskDoneListener,
+        DoneTaskFragment.OnTaskRestoreListener,
+        EditTaskDialogFragment.EditingTaskListener {
 
     FragmentManager fragmentManager;
 
@@ -40,6 +46,8 @@ public class MainActivity extends AppCompatActivity
     TaskFragment currentTaskFragment;
     TaskFragment doneTaskFragment;
 
+    AlarmHelper alarmHelper;
+
     SearchView searchView;
 
     public DBHelper dbHelper;
@@ -49,10 +57,13 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       Ads.showBanner(this);
+
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
 
         AlarmHelper.getInstance().init(getApplicationContext());
+        alarmHelper = AlarmHelper.getInstance();
 
         dbHelper = new DBHelper(getApplicationContext());
 
@@ -67,6 +78,12 @@ public class MainActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         MyApplication.activityResumed();
+        if (getIntent().getExtras() != null) {
+            Bundle args = getIntent().getExtras();
+            if (args.containsKey("hello")) {
+                Log.d("really?", getIntent().getStringExtra("hello"));
+            }
+        }
     }
 
     @Override
@@ -74,6 +91,14 @@ public class MainActivity extends AppCompatActivity
         super.onPause();
         MyApplication.activityPaused();
     }
+
+
+    //Чтобы не вылетало приложение, если открыть активити и тут же его свернуть
+    @Override
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
+       //super.onSaveInstanceState(outState);
+    }
+
 
     public void runSplash() {
         //код запуска сплэшскрина.
@@ -133,13 +158,13 @@ public class MainActivity extends AppCompatActivity
         //подключили Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         if (toolbar != null) {
-            toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+            toolbar.setTitleTextColor(getResources().getColor(R.color.colorWhite));
             setSupportActionBar(toolbar);
         }
 
 
         //Создадим TabLayout и добавим вкладки
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        final TabLayout tabLayout = findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText(R.string.current_task));
         tabLayout.addTab(tabLayout.newTab().setText(R.string.done_task));
 
@@ -171,7 +196,6 @@ public class MainActivity extends AppCompatActivity
         doneTaskFragment = (DoneTaskFragment) tabAdapter.getItem(TabAdapter.DONE_TASK_FRAGMENT_POSITION);
 
         searchView = (SearchView) findViewById(R.id.search_view);
-
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -192,15 +216,16 @@ public class MainActivity extends AppCompatActivity
             public void onClick(View view) {
                 //создаём объект типа AddingTaskDialogFragment и вызываем его.
                 DialogFragment addingTaskDialogFragment = new AddingTaskDialogFragment();
-                addingTaskDialogFragment.show(fragmentManager, "AddingTaskDialogFragment");
+                addingTaskDialogFragment.show(fragmentManager, "addingTaskDialogFragment");
             }
         });
     }
 
     @Override
     public void onTaskAdded(ModelTask newTask) {
-        currentTaskFragment.addTask(newTask, true);
         Toast.makeText(this, "Task added", Toast.LENGTH_LONG).show();
+        currentTaskFragment.addTask(newTask, true);
+
     }
 
     @Override
@@ -210,18 +235,26 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onTaskDone(ModelTask task) {
-        doneTaskFragment.addTask(task,false);
+        doneTaskFragment.addTask(task, false);
     }
 
     @Override
     public void onTaskRestore(ModelTask task) {
-currentTaskFragment.addTask(task,false);
+        currentTaskFragment.addTask(task, false);
     }
 
     @Override
-    public void onPointerCaptureChanged(boolean hasCapture) {
-
+    public void onBackPressed() {
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+        } else {
+            super.onBackPressed();
+        }
     }
 
-
+    @Override
+    public void onTaskEdited(ModelTask newTask) {
+        currentTaskFragment.updateTask(newTask);
+        dbHelper.update().task(newTask);
+    }
 }
