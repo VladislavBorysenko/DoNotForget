@@ -2,7 +2,7 @@ package com.example.donotforget.model;
 
 import com.example.donotforget.R;
 
-public class ModelSeparator implements Item{
+public class ModelSeparator implements Item {
     public static final int TYPE_OVERDUE = R.string.separator_overdue;
     public static final int TYPE_TODAY = R.string.separator_today;
     public static final int TYPE_TOMORROW = R.string.separator_tomorrow;
@@ -10,7 +10,7 @@ public class ModelSeparator implements Item{
 
     private int type;
 
-    public ModelSeparator(int type){
+    public ModelSeparator(int type) {
         this.type = type;
     }
 

@@ -30,7 +30,6 @@ import com.example.donotforget.fragment.TaskFragment;
 import com.example.donotforget.model.ModelTask;
 
 
-
 public class MainActivity extends AppCompatActivity
         implements AddingTaskDialogFragment.AddingTaskListener,
         CurrentTaskFragment.OnTaskDoneListener,
@@ -57,7 +56,7 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-       Ads.showBanner(this);
+        Ads.showBanner(this);
 
         PreferenceHelper.getInstance().init(getApplicationContext());
         preferenceHelper = PreferenceHelper.getInstance();
@@ -96,7 +95,7 @@ public class MainActivity extends AppCompatActivity
     //Чтобы не вылетало приложение, если открыть активити и тут же его свернуть
     @Override
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-       //super.onSaveInstanceState(outState);
+        //super.onSaveInstanceState(outState);
     }
 
 

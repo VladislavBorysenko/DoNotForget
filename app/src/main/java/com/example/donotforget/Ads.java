@@ -8,8 +8,8 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 public class Ads {
-    public static void showBanner(final Activity activity){
-        final AdView banner =activity.findViewById(R.id.banner);
+    public static void showBanner(final Activity activity) {
+        final AdView banner = activity.findViewById(R.id.banner);
         AdRequest adRequest = new AdRequest.Builder().build();
         banner.loadAd(adRequest);
 
@@ -17,15 +17,15 @@ public class Ads {
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                setupContentViewPadding(activity,banner.getHeight());
+                setupContentViewPadding(activity, banner.getHeight());
             }
         });
 
     }
 
-    public static void setupContentViewPadding(Activity activity, int padding){
+    public static void setupContentViewPadding(Activity activity, int padding) {
         View view = activity.findViewById(R.id.coordinator);
-        view.setPadding(view.getPaddingLeft(),view.getPaddingTop(),view.getPaddingRight(), padding);
+        view.setPadding(view.getPaddingLeft(), view.getPaddingTop(), view.getPaddingRight(), padding);
     }
 
 }

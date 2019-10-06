@@ -24,8 +24,8 @@ public class AlarmSetter extends BroadcastReceiver {
                 + " OR " + DBHelper.SELECTION_STATUS, new String[]{Integer.toString(ModelTask.STATUS_CURRENT),
                 Integer.toString(ModelTask.STATUS_OVERDUE)}, DBHelper.TASK_DATE_COLUMN));
 
-        for (ModelTask task: tasks) {
-            if (task.getDate() !=0) {
+        for (ModelTask task : tasks) {
+            if (task.getDate() != 0) {
                 alarmHelper.setAlarm(task);
             }
         }

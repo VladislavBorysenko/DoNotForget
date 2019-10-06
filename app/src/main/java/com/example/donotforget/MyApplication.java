@@ -5,7 +5,7 @@ import android.app.Application;
 public class MyApplication extends Application {
     private static boolean activityVisible;
 
-    public static boolean isActivityVisible(){
+    public static boolean isActivityVisible() {
         return activityVisible;
     }
 
@@ -13,7 +13,8 @@ public class MyApplication extends Application {
         activityVisible = true;
 
     }
-    public static void activityPaused(){
+
+    public static void activityPaused() {
         activityVisible = false;
     }
 }

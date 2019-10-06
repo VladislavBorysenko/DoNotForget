@@ -13,19 +13,20 @@ public class AlarmHelper {
     private Context context;
     private AlarmManager alarmManager;
 
-    public static AlarmHelper getInstance(){
-        if (instance == null){
+    public static AlarmHelper getInstance() {
+        if (instance == null) {
             instance = new AlarmHelper();
         }
         return instance;
     }
-    public void  init (Context context){
+
+    public void init(Context context) {
         this.context = context;
         alarmManager = (AlarmManager) context.getApplicationContext().getSystemService(Context.ALARM_SERVICE);
     }
 
     public void setAlarm(ModelTask task) {
-        Intent intent  = new Intent(context, AlarmReceiver.class);
+        Intent intent = new Intent(context, AlarmReceiver.class);
         intent.putExtra("title", task.getTitle());
         intent.putExtra("title_stamp", task.getTimeStamp());
         intent.putExtra("color", task.getPriorityColor());
@@ -37,7 +38,7 @@ public class AlarmHelper {
 
     }
 
-    public void removeAlarm(long taskTimeStamp){
+    public void removeAlarm(long taskTimeStamp) {
         Intent intent = new Intent(context, AlarmReceiver.class);
 
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) taskTimeStamp,

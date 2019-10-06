@@ -210,7 +210,7 @@ public class CurrentTasksAdapter extends TaskAdapter {
                     flipIn.start();//запуск анимации поворота вокруг вертикальной оси
                 }
             });
-        }else {
+        } else {
             ModelSeparator separator = (ModelSeparator) item;
             SeparatorViewHolder separatorViewHolder = (SeparatorViewHolder) viewHolder;
 

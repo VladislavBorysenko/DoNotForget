@@ -17,7 +17,6 @@ public class PreferenceHelper {
     private SharedPreferences preferences;
 
 
-
     //////////Паттерн синглтон.
     private PreferenceHelper() {
 
